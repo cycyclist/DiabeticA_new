@@ -1,21 +1,20 @@
 package com.example.diabetica.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.diabetica.data.repository.JugglucoRepository
 import com.example.diabetica.ui.detail.DetailScreen
 import com.example.diabetica.ui.main.MainScreen
 import com.example.diabetica.ui.settings.SettingsScreen
 import com.example.diabetica.ui.splash.SplashScreen
 import com.example.diabetica.viewmodel.MainViewModel
-
+import com.example.diabetica.ui.juggluco.JugglucoScreen
 @Composable
-fun AppNavigation(viewModel: MainViewModel) {
+fun AppNavigation(viewModel: MainViewModel, jugglucoRepository: JugglucoRepository) {
     val navController = rememberNavController()
 
     NavHost(
@@ -34,6 +33,13 @@ fun AppNavigation(viewModel: MainViewModel) {
         composable("main") {
             MainScreen(
                 viewModel = viewModel,
+                navController = navController
+            )
+        }
+
+        composable("juggluco") {
+            JugglucoScreen(
+                repository = jugglucoRepository,
                 navController = navController
             )
         }

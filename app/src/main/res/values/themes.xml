@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.DiabeticA_new" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.DiabeticA" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/white</item>
     </style>
 </resources>

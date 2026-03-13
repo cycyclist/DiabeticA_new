@@ -12,7 +12,8 @@ data class HealthRecord(
     val id: Int = 0,
     val title: String,
     val description: String,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    val glucoseLevel: Double? = null  // Добавлено!
 ) {
     fun getFormattedDate(): String {
         val date = Date(timestamp)

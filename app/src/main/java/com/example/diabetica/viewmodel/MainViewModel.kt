@@ -63,7 +63,7 @@ class MainViewModel(
         viewModelScope.launch {
             val record = HealthRecord(
                 title = title,
-                description = description
+                description = description,
             )
             repository.insert(record)
         }

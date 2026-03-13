@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.diabetica_new"
+    namespace = "com.example.diabetica"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.diabetica_new"
+        applicationId = "com.example.diabetica"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -56,6 +56,15 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+
+    // Retrofit для работы с API Juggluco
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    // Для конвертации JSON (альтернатива Gson)
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
 
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
