@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.diabetica.data.database.AppDatabase
+import com.example.diabetica.data.juggluco.JugglucoGlucose
 import com.example.diabetica.data.repository.HealthRecordRepository
 import com.example.diabetica.data.repository.JugglucoRepository
 import com.example.diabetica.navigation.AppNavigation

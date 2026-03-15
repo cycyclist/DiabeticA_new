@@ -14,16 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.diabetica.data.entity.HealthRecord
 import com.example.diabetica.viewmodel.MainViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
-// Функция для форматирования даты (добавьте её в начало файла)
-fun HealthRecord.getFormattedDate(): String {
-    val date = Date(timestamp)
-    val format = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-    return format.format(date)
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,7 +69,10 @@ fun MainScreen(
                 items(records) { record ->
                     RecordCard(
                         record = record,
-                        onClick = { navController.navigate("detail/${record.id}") }
+                        onClick = {
+                            // При клике передаем ID записи
+                            navController.navigate("detail/${record.id}")
+                        }
                     )
                 }
             }
@@ -110,7 +103,7 @@ fun RecordCard(
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = record.getFormattedDate(),  // Здесь используется функция
+                text = record.getFormattedDate(),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = 8.dp)
             )

@@ -12,9 +12,12 @@ import com.example.diabetica.ui.main.MainScreen
 import com.example.diabetica.ui.settings.SettingsScreen
 import com.example.diabetica.ui.splash.SplashScreen
 import com.example.diabetica.viewmodel.MainViewModel
-import com.example.diabetica.ui.juggluco.JugglucoScreen
+
 @Composable
-fun AppNavigation(viewModel: MainViewModel, jugglucoRepository: JugglucoRepository) {
+fun AppNavigation(
+    viewModel: MainViewModel,
+    jugglucoRepository: JugglucoRepository
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -33,13 +36,6 @@ fun AppNavigation(viewModel: MainViewModel, jugglucoRepository: JugglucoReposito
         composable("main") {
             MainScreen(
                 viewModel = viewModel,
-                navController = navController
-            )
-        }
-
-        composable("juggluco") {
-            JugglucoScreen(
-                repository = jugglucoRepository,
                 navController = navController
             )
         }
