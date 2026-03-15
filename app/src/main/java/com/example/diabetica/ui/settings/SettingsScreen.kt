@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.diabetica.viewmodel.MainViewModel
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.Alignment
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +30,7 @@ fun SettingsScreen(
                 title = { Text(if (isRussian) "Настройки" else "Settings") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Text(if (isRussian) "Назад" else "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
                 }
             )
@@ -84,14 +86,20 @@ fun SettingsScreen(
                 }
             }
 
-            // Кнопка смены языка
             Button(
                 onClick = { viewModel.toggleLanguage() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp)
             ) {
-                Text(if (isRussian) "Сменить язык на English" else "Switch to Russian")
+                Text(if (isRussian) "Сменить язык на Английский" else "Switch to Russian")
+            }
+
+            Button(
+                onClick = { navController.navigate("juggluco") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(if (isRussian) "Данные сенсора Sibionics" else "Sibionics Sensor data")
             }
         }
     }

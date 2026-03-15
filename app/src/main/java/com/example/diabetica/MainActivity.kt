@@ -1,28 +1,39 @@
-package com.example.diabetica_new
+package com.example.diabetica  // ВАЖНО: без _new!
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.diabetica.data.database.AppDatabase
+import com.example.diabetica.data.juggluco.JugglucoGlucose
 import com.example.diabetica.data.repository.HealthRecordRepository
+import com.example.diabetica.data.repository.JugglucoRepository
 import com.example.diabetica.navigation.AppNavigation
 import com.example.diabetica.ui.theme.DiabeticaTheme
 import com.example.diabetica.utils.PreferencesManager
 import com.example.diabetica.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var jugglucoRepository: JugglucoRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Инициализация БД и репозитория
         val database = AppDatabase.getInstance(this)
         val repository = HealthRecordRepository(database.healthRecordDao())
         val preferencesManager = PreferencesManager(this)
 
+        jugglucoRepository = JugglucoRepository(this, database)
+
+        lifecycleScope.launch {
+            jugglucoRepository.initialize()
+        }
+
         setContent {
-            // Создаем ViewModel с фабрикой
             val viewModel: MainViewModel = viewModel(
                 factory = MainViewModelFactory(repository, preferencesManager)
             )
@@ -32,13 +43,20 @@ class MainActivity : ComponentActivity() {
             DiabeticaTheme(
                 darkTheme = isDarkMode
             ) {
-                AppNavigation(viewModel = viewModel)
+                AppNavigation(
+                    viewModel = viewModel,
+                    jugglucoRepository = jugglucoRepository
+                )
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        jugglucoRepository.disconnect()
+    }
 }
 
-// Фабрика для ViewModel
 class MainViewModelFactory(
     private val repository: HealthRecordRepository,
     private val preferencesManager: PreferencesManager
