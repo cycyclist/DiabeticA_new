@@ -133,6 +133,7 @@ fun SettingsScreen(
                         )
                     }
                 }
+                Text(if (isRussian) "Данные сенсора Sibionics" else "Sibionics Sensor data")
             }
         }
     }

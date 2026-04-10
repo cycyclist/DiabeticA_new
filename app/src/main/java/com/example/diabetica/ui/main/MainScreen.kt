@@ -113,7 +113,10 @@ fun MainScreen(
                 ) { record ->
                     RecordCard(
                         record = record,
-                        onClick = { navController.navigate("detail/${record.id}") }
+                        onClick = {
+                            // При клике передаем ID записи
+                            navController.navigate("detail/${record.id}")
+                        }
                     )
                 }
             }

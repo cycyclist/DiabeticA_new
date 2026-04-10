@@ -7,7 +7,6 @@ import com.example.diabetica.data.entity.HealthRecord
 import com.example.diabetica.data.repository.HealthRecordRepository
 import com.example.diabetica.utils.NetworkUtils
 import com.example.diabetica.utils.PreferencesManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -17,7 +16,6 @@ class MainViewModel(
     context: Context
 ) : ViewModel() {
 
-    // Для списка записей
     val allRecords = repository.getAllRecords()
         .stateIn(
             scope = viewModelScope,
@@ -25,7 +23,6 @@ class MainViewModel(
             initialValue = emptyList()
         )
 
-    // Для темы
     val isDarkMode = preferencesManager.isDarkMode
         .stateIn(
             scope = viewModelScope,
@@ -80,6 +77,11 @@ class MainViewModel(
             initialValue = true
         )
 
+    // ДОБАВЬТЕ ЭТОТ МЕТОД
+    suspend fun getRecord(id: Int): HealthRecord? {
+        return repository.getRecordById(id)
+    }
+
     fun toggleTheme() {
         viewModelScope.launch {
             val current = isDarkMode.value
@@ -87,13 +89,6 @@ class MainViewModel(
         }
     }
 
-    fun getRecord(id: Int): Flow<HealthRecord?> {
-        return flow {
-            // В реальном проекте здесь должен быть запрос к репозиторию
-            // Пока возвращаем null
-            emit(null)
-        }.flowOn(Dispatchers.IO)
-    }
     fun toggleLanguage() {
         viewModelScope.launch {
             val current = isRussianLanguage.value
@@ -106,6 +101,7 @@ class MainViewModel(
             val record = HealthRecord(
                 title = title,
                 description = description,
+                glucoseLevel = null
             )
             repository.insert(record)
         }

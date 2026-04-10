@@ -17,4 +17,7 @@ interface HealthRecordDao {
 
     @Query("SELECT * FROM health_records ORDER BY timestamp DESC")
     fun getAllRecords(): Flow<List<HealthRecord>>
+
+    @Query("SELECT * FROM health_records WHERE id = :id")
+    suspend fun getRecordById(id: Int): HealthRecord?
 }
