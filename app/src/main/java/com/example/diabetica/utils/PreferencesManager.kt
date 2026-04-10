@@ -13,8 +13,8 @@ class PreferencesManager(private val context: Context) {
 
     companion object {
         val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
-        val LANGUAGE_KEY = booleanPreferencesKey("is_russian") // true - русский, false - английский
-    }
+        val LANGUAGE_KEY = booleanPreferencesKey("is_russian")
+        val GLUCOSE_UNIT_KEY = booleanPreferencesKey("use_mmol")}
 
     val isDarkMode: Flow<Boolean> = context.dataStore.data
         .map { preferences ->
@@ -26,15 +26,25 @@ class PreferencesManager(private val context: Context) {
             preferences[LANGUAGE_KEY] ?: true // по умолчанию русский
         }
 
-    suspend fun setDarkMode(enabled: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[DARK_MODE_KEY] = enabled
+    val useMmol: Flow<Boolean> = context.dataStore.data
+        .map { preferences ->
+            preferences[GLUCOSE_UNIT_KEY] ?: false  // по умолчанию мг/дл
         }
-    }
 
-    suspend fun setLanguage(isRussian: Boolean) {
+    suspend fun setGlucoseUnit(useMmol: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[LANGUAGE_KEY] = isRussian
+            preferences[GLUCOSE_UNIT_KEY] = useMmol
+        }}
+
+        suspend fun setDarkMode(enabled: Boolean) {
+            context.dataStore.edit { preferences ->
+                preferences[DARK_MODE_KEY] = enabled
+            }
+        }
+
+        suspend fun setLanguage(isRussian: Boolean) {
+            context.dataStore.edit { preferences ->
+                preferences[LANGUAGE_KEY] = isRussian
+            }
         }
     }
-}

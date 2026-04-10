@@ -6,15 +6,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.diabetica.data.repository.JugglucoRepository
+import com.example.diabetica.data.repository.SimpleJugglucoRepository
 import com.example.diabetica.ui.detail.DetailScreen
+import com.example.diabetica.ui.juggluco.SimpleJugglucoScreen
 import com.example.diabetica.ui.main.MainScreen
 import com.example.diabetica.ui.settings.SettingsScreen
 import com.example.diabetica.ui.splash.SplashScreen
 import com.example.diabetica.viewmodel.MainViewModel
-import com.example.diabetica.ui.juggluco.JugglucoScreen
+
 @Composable
-fun AppNavigation(viewModel: MainViewModel, jugglucoRepository: JugglucoRepository) {
+fun AppNavigation(
+    viewModel: MainViewModel,
+    jugglucoRepository: SimpleJugglucoRepository
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -37,13 +41,6 @@ fun AppNavigation(viewModel: MainViewModel, jugglucoRepository: JugglucoReposito
             )
         }
 
-        composable("juggluco") {
-            JugglucoScreen(
-                repository = jugglucoRepository,
-                navController = navController
-            )
-        }
-
         composable(
             route = "detail/{recordId}",
             arguments = listOf(navArgument("recordId") { type = NavType.IntType })
@@ -60,6 +57,15 @@ fun AppNavigation(viewModel: MainViewModel, jugglucoRepository: JugglucoReposito
             SettingsScreen(
                 viewModel = viewModel,
                 navController = navController
+            )
+        }
+
+        // Экран для сенсора
+        composable("juggluco") {
+            SimpleJugglucoScreen(
+                repository = jugglucoRepository,
+                navController = navController,
+                viewModel = viewModel
             )
         }
     }
