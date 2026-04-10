@@ -6,8 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.diabetica.data.repository.JugglucoRepository
+import com.example.diabetica.data.repository.SimpleJugglucoRepository
 import com.example.diabetica.ui.detail.DetailScreen
+import com.example.diabetica.ui.juggluco.SimpleJugglucoScreen
 import com.example.diabetica.ui.main.MainScreen
 import com.example.diabetica.ui.settings.SettingsScreen
 import com.example.diabetica.ui.splash.SplashScreen
@@ -16,7 +17,7 @@ import com.example.diabetica.viewmodel.MainViewModel
 @Composable
 fun AppNavigation(
     viewModel: MainViewModel,
-    jugglucoRepository: JugglucoRepository
+    jugglucoRepository: SimpleJugglucoRepository
 ) {
     val navController = rememberNavController()
 
@@ -56,6 +57,15 @@ fun AppNavigation(
             SettingsScreen(
                 viewModel = viewModel,
                 navController = navController
+            )
+        }
+
+        // Экран для сенсора
+        composable("juggluco") {
+            SimpleJugglucoScreen(
+                repository = jugglucoRepository,
+                navController = navController,
+                viewModel = viewModel
             )
         }
     }
